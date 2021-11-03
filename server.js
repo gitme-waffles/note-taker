@@ -1,7 +1,6 @@
 const express = require("express");
 const path = require("path");
 const api = require("./routes/index");
-// const notes = require("./db/db.json");
 
 const app = express();
 const PORT = 3001; // port to use, uncoment when needed
