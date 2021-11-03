@@ -1,8 +1,7 @@
 const api = require("express").Router();
 const uuid = require("../helpers/uuid");
-const { readFromFile, readAndAppend } = require("../helpers/fsUtils");
+const { readFromFile, readAndAppend, readAndDelete } = require("../helpers/fsUtils");
 const notesRouter = require("./notes");
-
 
 // /api/notes
 // api.use('/notes', notesRouter)
@@ -11,12 +10,11 @@ const notesRouter = require("./notes");
 // api.use('/comments', commentsRouter)
 
 api.get("/notes", (req, res) => {
-    // console.info("-Console Log- indexRoutes_get j.p: " + req);
   readFromFile("./db/db.json").then((data) => res.json(JSON.parse(data)));
 });
 
 api.post("/notes", (req, res) => {
-  console.info(`-Console Log- notes.post: ${req}`);
+  //   console.info(`-Console Log- notes.post: ${req}`);
 
   const { title, text } = req.body;
 
@@ -24,13 +22,29 @@ api.post("/notes", (req, res) => {
     const newNote = {
       title,
       text,
-      noteId: uuid(),
+      id: uuid(),
     };
 
     readAndAppend(newNote, "./db/db.json");
     res.json(`new note added!`);
   } else {
     res.error(`Error adding note`);
+  }
+});
+
+api.delete("/notes/:id", (req, res) => {
+  console.log(`-Console Log- app.delete:  ${req.method}`);
+//   console.log('Console Log lol' + req.params.id);
+
+
+  const { title, text, id } = req.params;
+    console.log('-Console Log api.del_id -' + id);
+
+  if (id) {
+    readAndDelete(id, "./db/db.json");
+    res.json(`note deleted!`);
+  } else {
+    res.error(`Error deleting note`);
   }
 });
 
