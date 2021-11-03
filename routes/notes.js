@@ -19,7 +19,7 @@ notes.post('/', (req,res) => {
         const newNote = {
             title,
             text,
-            noteId: uuid()
+            id: uuid()
         };
         
         readAndAppend(newNote, './db/db.json')
