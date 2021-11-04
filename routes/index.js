@@ -1,11 +1,9 @@
 const api = require("express").Router();
 const uuid = require("../helpers/uuid");
 const { readFromFile, readAndAppend, readAndDelete } = require("../helpers/fsUtils");
-const notesRouter = require("./notes");
+// const notesRouter = require("./notes");
 
-// 
 // api.use('/notes', notesRouter)
-
 
 api.get("/notes", (req, res) => {
   readFromFile("./db/db.json").then((data) => res.json(JSON.parse(data)));
@@ -33,7 +31,7 @@ api.delete("/notes/:id", (req, res) => {
   console.log(`-Console Log- app.delete:  ${req.method}`);
 
 
-  const { title, text, id } = req.params;
+  const { id } = req.params;
     console.log('-Console Log api.del_id -' + id);
 
   if (id) {
