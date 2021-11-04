@@ -3,18 +3,15 @@ const uuid = require("../helpers/uuid");
 const { readFromFile, readAndAppend, readAndDelete } = require("../helpers/fsUtils");
 const notesRouter = require("./notes");
 
-// /api/notes
+// 
 // api.use('/notes', notesRouter)
 
-// api/comments
-// api.use('/comments', commentsRouter)
 
 api.get("/notes", (req, res) => {
   readFromFile("./db/db.json").then((data) => res.json(JSON.parse(data)));
 });
 
 api.post("/notes", (req, res) => {
-  //   console.info(`-Console Log- notes.post: ${req}`);
 
   const { title, text } = req.body;
 
@@ -34,7 +31,6 @@ api.post("/notes", (req, res) => {
 
 api.delete("/notes/:id", (req, res) => {
   console.log(`-Console Log- app.delete:  ${req.method}`);
-//   console.log('Console Log lol' + req.params.id);
 
 
   const { title, text, id } = req.params;
