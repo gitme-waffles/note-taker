@@ -5,7 +5,9 @@ const api = require("./routes/index");
 const app = express();
 const PORT = 3001; // port to use, uncoment when needed
 
+// properly parse data
 app.use(express.json())
+// 
 app.use(express.urlencoded({extended: true}))
 
 
