@@ -1,9 +1,7 @@
 const notes = require("express").Router();
 const uuid = require('../helpers/uuid')
 const { readFromFile, readAndAppend } = require("../helpers/fsUtils");
-// localhost:3001/api/notes/notes
 notes.get("/", (req, res) => {
-//   console.info("-Console Log- Routes_notes: " + JSON.stringify({req}));
   readFromFile("./db/db.json").then((data) => res.json(JSON.parse(data)));
 });
 
@@ -29,6 +27,19 @@ notes.post('/', (req,res) => {
     }
 })
 
-module.exports = notes;
+api.delete("/notes/:id", (req, res) => {
+    console.log(`-Console Log- app.delete:  ${req.method}`);
+  
+  
+    const { title, text, id } = req.params;
+      console.log('-Console Log api.del_id -' + id);
+  
+    if (id) {
+      readAndDelete(id, "./db/db.json");
+      res.json(`note deleted!`);
+    } else {
+      res.error(`Error deleting note`);
+    }
+  });
 
-// Homework\11_Note-Taker\db\db.json
+module.exports = notes;
